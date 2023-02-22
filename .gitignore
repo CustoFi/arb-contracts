@@ -1,0 +1,26 @@
+# Foundry
+cache/
+
+# JS
+node_modules/
+
+# Hardhat files
+cache_hardhat/
+# artifacts/
+tasks/
+
+# Hardhat plugin files
+typechain-types/
+
+abi
+build
+
+.env
+hardhat.config.js
+
+.idea
+.DS_Store
+
+.openzeppelin/*
+artifacts
+deployments
