@@ -28,7 +28,7 @@ contract AirdropClaim is ReentrancyGuard {
     bool public init;
 
     uint256 public INIT_SHARE;
-    // 50% veCUS, 25% instant claim the, 25% 3 weeks linear $the
+    // 50% veCUS, 25% instant claim CUS, 25% 3 weeks linear $CUS
     uint256 public constant PRECISION = 1000;
     uint256 public constant VESTED_SHARE = 500;
     uint256 public constant LINEAR_DISTRO = 250;
@@ -103,19 +103,19 @@ contract AirdropClaim is ReentrancyGuard {
         require(init, "not init");
 
         uint256 _vestedAmount = (_amount * VESTED_SHARE) / PRECISION;
-        uint256 _theInstantAmount = (_amount * LINEAR_DISTRO) / PRECISION;
-        uint256 _theLockedLinearAmount = _theInstantAmount;
-        uint256 _tokenPerSec = (_theLockedLinearAmount * PRECISION) /
+        uint256 _cusInstantAmount = (_amount * LINEAR_DISTRO) / PRECISION;
+        uint256 _cusLockedLinearAmount = _cusInstantAmount;
+        uint256 _tokenPerSec = (_cusLockedLinearAmount * PRECISION) /
             DISTRIBUTION_PERIOD;
 
         UserInfo memory _user = UserInfo({
             totalAmount: _amount,
-            initAmount: _theInstantAmount,
+            initAmount: _cusInstantAmount,
             vestedAmount: _vestedAmount,
-            lockedAmount: _theLockedLinearAmount,
+            lockedAmount: _cusLockedLinearAmount,
             tokenPerSec: _tokenPerSec,
             lastTimestamp: startTimestamp,
-            claimed: _theInstantAmount + _vestedAmount,
+            claimed: _cusInstantAmount + _vestedAmount,
             to: _to
         });
 
@@ -123,7 +123,7 @@ contract AirdropClaim is ReentrancyGuard {
         usersFlag[_who] = true;
 
         // send out init amount
-        token.safeTransfer(_to, _theInstantAmount);
+        token.safeTransfer(_to, _cusInstantAmount);
         token.approve(ve, 0);
         token.approve(ve, _vestedAmount);
         IVotingEscrow(ve).createLockFor(_vestedAmount, 2 * 364 * 86400, _who);

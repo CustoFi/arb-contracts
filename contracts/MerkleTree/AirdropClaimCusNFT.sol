@@ -82,8 +82,8 @@ contract AirdropClaimCusNFT is ReentrancyGuard {
         require(IVotingEscrow(ve).ownerOf(_tokenId) == _to, 'wrong ve mint');
 
 
-        uint256 _theShare = _amount - _veShare;
-        token.safeTransfer(_to, _theShare);
+        uint256 _cusShare = _amount - _veShare;
+        token.safeTransfer(_to, _cusShare);
         emit Claim(_who, _to, _amount, _veShare, _tokenId, block.timestamp);
         return true;
     }

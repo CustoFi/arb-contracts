@@ -35,7 +35,7 @@ contract Custodian is ERC721Enumerable, Ownable {
         uint256 _nftPrice,
         uint256 _startTimestamp,
         address _contractReceiver
-    ) ERC721("Custodian", "theNFT") {
+    ) ERC721("Custodian", "cusNFT") {
         MAX_SUPPLY = _maxSupply;
         NFT_PRICE = _nftPrice;
         SALE_START_TIMESTAMP = _startTimestamp;
